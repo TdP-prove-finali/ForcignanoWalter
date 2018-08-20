@@ -24,6 +24,10 @@ public class Model {
 	private boolean pesoTempo;
 	int j = 0;
 
+	public StepIdMap getStepIdMap() {
+		return stepIdMap;
+	}
+
 	public Model() {
 		super();
 		pesoTempo = true;

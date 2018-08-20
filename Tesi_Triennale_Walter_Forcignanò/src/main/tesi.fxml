@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
@@ -8,30 +9,39 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox>
+            <HBox alignment="BASELINE_LEFT" spacing="50.0">
                <children>
-                  <Label text="Partenza: " />
-                  <ComboBox />
+                  <VBox>
+                     <children>
+                        <Label text="Partenza: " />
+                        <Label text="Destinazione: " />
+                     </children>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <ComboBox fx:id="boxPartenza" />
+                        <ComboBox fx:id="boxDestinazione" />
+                     </children>
+                  </VBox>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </HBox>
-            <HBox>
-               <children>
-                  <Label text="Destinazione: " />
-                  <ComboBox />
-               </children>
-            </HBox>
-            <HBox>
+            <HBox spacing="10.0">
                <children>
                   <Label text="Seleziona se vuoi calcolare il percorso in base al tempo di percorrenza: " />
-                  <RadioButton mnemonicParsing="false" rotate="180.0" />
+                  <RadioButton fx:id="PesoTempo" mnemonicParsing="false" rotate="180.0" />
                </children>
             </HBox>
-            <TextArea />
+            <TextArea fx:id="txtArea" />
          </children>
       </VBox>
    </center>
