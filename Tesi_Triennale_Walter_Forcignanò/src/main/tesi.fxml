@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox>
+               <children>
+                  <Label text="Partenza: " />
+                  <ComboBox />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label text="Destinazione: " />
+                  <ComboBox />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label text="Seleziona se vuoi calcolare il percorso in base al tempo di percorrenza: " />
+                  <RadioButton mnemonicParsing="false" rotate="180.0" />
+               </children>
+            </HBox>
+            <TextArea />
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <Label text="CAMMINI MINIMI NELLA CITTA' DI NEW YORK" BorderPane.alignment="CENTER" />
+   </top>
+</BorderPane>
