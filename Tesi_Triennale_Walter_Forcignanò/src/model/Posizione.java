@@ -1,33 +1,25 @@
 package model;
 
+import com.javadocmd.simplelatlng.LatLng;
+
 public class Posizione {
-	
-	private int latitudine;
-	private int longitudine;
-	
+
+	private LatLng posizione;
+
 	private String nomeLuogo;
 
-	public Posizione(int latitudine, int longitudine, String nomeLuogo) {
+	public Posizione(LatLng posizione, String nomeLuogo) {
 		super();
-		this.latitudine = latitudine;
-		this.longitudine = longitudine;
+		this.posizione = posizione;
 		this.nomeLuogo = nomeLuogo;
 	}
 
-	public int getLatitudine() {
-		return latitudine;
+	public LatLng getPosizione() {
+		return posizione;
 	}
 
-	public void setLatitudine(int latitudine) {
-		this.latitudine = latitudine;
-	}
-
-	public int getLongitudine() {
-		return longitudine;
-	}
-
-	public void setLongitudine(int longitudine) {
-		this.longitudine = longitudine;
+	public void setPosizione(LatLng posizione) {
+		this.posizione = posizione;
 	}
 
 	public String getNomeLuogo() {
@@ -40,17 +32,15 @@ public class Posizione {
 
 	@Override
 	public String toString() {
-		return "Posizione [latitudine=" + latitudine + ", longitudine=" + longitudine + ", nomeLuogo=" + nomeLuogo
-				+ "]";
+		return nomeLuogo+" "+posizione.toString();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + latitudine;
-		result = prime * result + longitudine;
 		result = prime * result + ((nomeLuogo == null) ? 0 : nomeLuogo.hashCode());
+		result = prime * result + ((posizione == null) ? 0 : posizione.hashCode());
 		return result;
 	}
 
@@ -63,18 +53,18 @@ public class Posizione {
 		if (getClass() != obj.getClass())
 			return false;
 		Posizione other = (Posizione) obj;
-		if (latitudine != other.latitudine)
-			return false;
-		if (longitudine != other.longitudine)
-			return false;
 		if (nomeLuogo == null) {
 			if (other.nomeLuogo != null)
 				return false;
 		} else if (!nomeLuogo.equals(other.nomeLuogo))
 			return false;
+		if (posizione == null) {
+			if (other.posizione != null)
+				return false;
+		} else if (!posizione.equals(other.posizione))
+			return false;
 		return true;
 	}
-	
 	
 	
 

@@ -1,18 +1,18 @@
 package main;
 
-/**
- * Sample Skeleton for 'tesi.fxml' Controller Class
- */
-
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import model.Model;
-import model.Step;
+import model.Posizione;
+import model.PosizionePiuPeso;
 
 public class Controller {
 	private Model model;
@@ -24,10 +24,14 @@ public class Controller {
     private URL location;
 
     @FXML // fx:id="boxPartenza"
-    private ComboBox<Step> boxPartenza; // Value injected by FXMLLoader
+    private ComboBox<Posizione> boxPartenza; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxDestinazione"
-    private ComboBox<Step> boxDestinazione; // Value injected by FXMLLoader
+    private ComboBox<Posizione> boxDestinazione; // Value injected by FXMLLoader
+    
+    @FXML // fx:id="btnPercorso"
+    private Button btnPercorso; // Value injected by FXMLLoader
+
 
     @FXML // fx:id="PesoTempo"
     private RadioButton PesoTempo; // Value injected by FXMLLoader
@@ -35,10 +39,38 @@ public class Controller {
     @FXML // fx:id="txtArea"
     private TextArea txtArea; // Value injected by FXMLLoader
 
+    
+    
+    @FXML
+    void handleCalcolaPercorso(ActionEvent event) {
+    	
+    	if((this.boxPartenza.getValue()== null)||this.boxDestinazione.getValue()==null) {
+    		this.txtArea.setText("Errore è necessario selezionare una posizione di partenza e una di destinazione distinte.");
+    	}else if(this.boxDestinazione.getValue().equals(this.boxPartenza.getValue())) {
+    		this.txtArea.setText("Errore è necessario selezionare una posizione di partenza e una di destinazione distinte.");
+    	}else {
+    		//calcolare il percorso ottimale tra partenza e destinazione.
+    		
+    		List<PosizionePiuPeso> percorsoOttimale = model.calcolaPercorsoOttimale(this.boxPartenza.getValue(),this.boxDestinazione.getValue());
+    		
+    		if(percorsoOttimale.size()==0)
+    			this.txtArea.setText("Destinazione non raggiungibile.");
+    		else
+    		this.txtArea.setText("Il percorso ottimale è: \n"+percorsoOttimale.toString());
+    		
+    		
+    	}
+    	
+    	
+    	
+
+    }
+    
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert boxPartenza != null : "fx:id=\"boxPartenza\" was not injected: check your FXML file 'tesi.fxml'.";
         assert boxDestinazione != null : "fx:id=\"boxDestinazione\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert btnPercorso != null : "fx:id=\"btnPercorso\" was not injected: check your FXML file 'tesi.fxml'.";  
         assert PesoTempo != null : "fx:id=\"PesoTempo\" was not injected: check your FXML file 'tesi.fxml'.";
         assert txtArea != null : "fx:id=\"txtArea\" was not injected: check your FXML file 'tesi.fxml'.";
 
@@ -46,13 +78,8 @@ public class Controller {
 
 	public void setModel(Model model) {
 		this.model=model;
-		// non va bene perchè devo avere una lista di posizioni che corrispondono alla via.
-		//l'utente sceglie in base alle vie non in base alle coordinate.
-		//posso creare degli oggetti che hanno via e coordinate insieme.
-		//anche se in teoria questo puo' essere risolto direttamente con lo step.
-		//poi si vede.
-		
-		//boxPartenza.getItems().addAll(model.getStepIdMap().values());
-		//boxDestinazione.getItems().addAll(model.getStepIdMap().values());
+		model.creaGrafo();
+		boxPartenza.getItems().addAll(model.getPositionsList());
+		boxDestinazione.getItems().addAll(model.getPositionsList());
 	}
 }
