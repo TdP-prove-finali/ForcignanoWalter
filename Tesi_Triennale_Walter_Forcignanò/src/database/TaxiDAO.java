@@ -76,8 +76,6 @@ public class TaxiDAO {
 						rs.getString("starting_street"), rs.getString("end_street"), rs.getDouble("total_distance"),
 						rs.getDouble("total_travel_time"), rs.getInt("number_of_steps"))));
 
-				// System.out.format("%d %s %s\n", rs.getInt("ccode"), rs.getString("StateAbb"),
-				// rs.getString("StateNme"));
 			}
 
 			conn.close();
@@ -95,7 +93,7 @@ public class TaxiDAO {
 
 		List<Step> steps = new ArrayList<>();
 
-		String sql = "select step_id,taxi_id,percorso_id,street_for_each_step,travel_time_per_step,distance_per_step,step_maneuvers,step_direction,step_location_list from step limit 100000";
+		String sql = "select step_id,taxi_id,percorso_id,street_for_each_step,travel_time_per_step,distance_per_step,step_maneuvers,step_direction,step_location_list from step limit 200000";
 
 		try {
 			Connection conn = ConnectDB.getConnection();

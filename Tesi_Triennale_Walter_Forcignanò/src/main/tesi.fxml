@@ -40,7 +40,7 @@
             <HBox spacing="10.0">
                <children>
                   <Label text="Seleziona se vuoi calcolare il percorso in base al tempo di percorrenza: " />
-                  <RadioButton fx:id="PesoTempo" mnemonicParsing="false" rotate="180.0" />
+                  <RadioButton fx:id="PesoTempo" mnemonicParsing="false" onAction="#handleChangePeso" rotate="180.0" />
                </children>
                <padding>
                   <Insets left="10.0" />
