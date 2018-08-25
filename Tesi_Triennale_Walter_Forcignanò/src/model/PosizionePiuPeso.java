@@ -3,17 +3,21 @@ package model;
 public class PosizionePiuPeso {
 	private Posizione posizione;
 	private double peso;
+
 	public PosizionePiuPeso(Posizione posizione, double peso) {
 		super();
 		this.posizione = posizione;
 		this.peso = peso;
 	}
+
 	public Posizione getPosizione() {
 		return posizione;
 	}
+
 	public double getPeso() {
 		return peso;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -21,6 +25,7 @@ public class PosizionePiuPeso {
 		result = prime * result + ((posizione == null) ? 0 : posizione.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -37,13 +42,15 @@ public class PosizionePiuPeso {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return posizione + ", peso=" + peso ;
+		return posizione + ", peso=" + peso;
 	}
-	
-	
-	
-	
+
+	public String getStringPosizione() {
+		// TODO Auto-generated method stub
+		return this.posizione.getNomeLuogo();
+	}
 
 }

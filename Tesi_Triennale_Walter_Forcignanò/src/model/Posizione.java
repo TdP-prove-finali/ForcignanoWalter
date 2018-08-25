@@ -7,11 +7,13 @@ public class Posizione {
 	private LatLng posizione;
 
 	private String nomeLuogo;
+	private String manovra;
 
-	public Posizione(LatLng posizione, String nomeLuogo) {
+	public Posizione(LatLng posizione, String nomeLuogo, String manovra) {
 		super();
 		this.posizione = posizione;
 		this.nomeLuogo = nomeLuogo;
+		this.manovra= manovra;
 	}
 
 	public LatLng getPosizione() {
@@ -28,6 +30,15 @@ public class Posizione {
 
 	public void setNomeLuogo(String nomeLuogo) {
 		this.nomeLuogo = nomeLuogo;
+	}
+
+	
+	public String getManovra() {
+		return manovra;
+	}
+
+	public void setManovra(String manovra) {
+		this.manovra = manovra;
 	}
 
 	@Override

@@ -112,7 +112,7 @@ public class Model {
 
 	}
 
-	public void creaVerticiGrafo() {
+	public void creaGrafo() {
 		// bisogna definire quali sono i vertici e quali gli archi.
 		// un unico grafo verrà generato con le posizioni come vertici.
 		// come peso sarà la distanza.
@@ -128,10 +128,12 @@ public class Model {
 
 				LatLng ll = new LatLng(latitude, longitude);
 				String nomeLuogo = s.getStreet_for_each_step();
+				String manovra = s.getStep_direction();
+				
 
 				// System.out.println(ll.toString());
 				if (!posizioniMap.containsKey(ll)) {
-					posizioniMap.put(ll, new Posizione(ll, nomeLuogo));
+					posizioniMap.put(ll, new Posizione(ll, nomeLuogo, manovra));
 				}
 
 			} catch (NumberFormatException nfe) {
@@ -148,10 +150,6 @@ public class Model {
 
 		System.out.println("Dimensione del grafo: " + this.grafo.vertexSet().size());
 
-	
-	}
-	
-	public void creaArchiGrafo() {
 		//da qui inizio ad aggingere gli archi.
 		for (Percorso p : this.percorsoIdMap.values()) {
 
@@ -170,6 +168,8 @@ public class Model {
 
 					String[] posizionePartenza = partenza.getStep_location_list().split(",");
 					String[] posizioneArrivo = arrivo.getStep_location_list().split(",");
+					
+					
 
 					try {
 						double latitudePartenza = Double.parseDouble(posizionePartenza[0]);
