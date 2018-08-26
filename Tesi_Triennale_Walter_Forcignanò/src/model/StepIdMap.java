@@ -1,11 +1,16 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StepIdMap {
-	//la posizione è una variabile di tipo string che nella tabella è salvata come steplocationList
+	// la posizione è una variabile di tipo string che nella tabella è salvata come
+	// steplocationList
 
 	private Map<String, Step> map = new HashMap<String, Step>();
 
@@ -26,10 +31,19 @@ public class StepIdMap {
 		return this.map.get(posizione);
 	}
 
-	public Collection <Step> values() {
+	public Collection<Step> values() {
 		// TODO Auto-generated method stub
-		return this.map.values();
-	}
+		List<Step> steps = new ArrayList<>(this.map.values());
+		Collections.sort(steps, new Comparator<Step>() {
 
-	
+			@Override
+			public int compare(Step a, Step b) {
+				// TODO Auto-generated method stub
+				return Integer.compare(a.getPercorso_id(), b.getPercorso_id());
+			}
+
+		});
+
+		return steps;
+	}
 }

@@ -1,5 +1,6 @@
 package main;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -10,6 +11,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
@@ -20,6 +23,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import model.Model;
 import model.Posizione;
 import model.PosizionePiuPeso;
@@ -69,13 +75,15 @@ public class Controller {
 
 	@FXML // fx:id="pieChart"
 	private PieChart pieChart; // Value injected by FXMLLoader
-	
-	private ObservableList<PieChart.Data> pieChartData ;
-	
-	 
+
+	private ObservableList<PieChart.Data> pieChartData;
+	private Stage secondaryStage;
 
 	@FXML
 	void handleCalcolaPercorso(ActionEvent event) {
+
+		this.txtField.setVisible(false);
+		this.pieChart.setVisible(true);
 
 		if ((this.boxPartenza.getValue() == null) || this.boxDestinazione.getValue() == null) {
 			this.txtField.setVisible(true);
@@ -104,9 +112,9 @@ public class Controller {
 				// + model.calcolaPeso(percorsoOttimale));
 
 				ObservableList<newRow> values = FXCollections.observableArrayList();
-			
+
 				pieChartData.removeAll(pieChartData);
-				
+
 				for (int i = 0; i < percorsoOttimale.size(); i++) {
 
 					values.add(new newRow(percorsoOttimale.get(i).getStringPosizione(),
@@ -115,7 +123,7 @@ public class Controller {
 
 					pieChartData.add(new Data(percorsoOttimale.get(i).getPosizione().getNomeLuogo(),
 							percorsoOttimale.get(i).getPeso()));
-					
+
 				}
 				tableView.setItems(values);
 				this.numeroManovre.setText("" + percorsoOttimale.size());
@@ -141,6 +149,30 @@ public class Controller {
 			this.colonnaPeso.setText("Distanza Percorsa (km)");
 		}
 
+	}
+
+	@FXML
+	void handleEspandiGrafo(MouseEvent event) {
+		try {
+			secondaryStage = new Stage();
+			// Fill stage with content
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("piechart.fxml"));
+			BorderPane children = (BorderPane) loader.load();
+			Scene scene = new Scene(children);
+
+			PieChartController controller = (PieChartController) loader.getController();
+
+			ObservableList<PieChart.Data> pieChartData2 = FXCollections.observableArrayList(this.pieChartData);
+			controller.setDataForPieChart(pieChartData2);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			secondaryStage.setScene(scene);
+			secondaryStage.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		this.pieChart.setVisible(false);
 	}
 
 	@FXML
@@ -177,10 +209,9 @@ public class Controller {
 		this.colonnaCoordinate.setCellValueFactory(new PropertyValueFactory<>("coordinate"));
 		this.colonnaNumeroManovre.setCellValueFactory(new PropertyValueFactory<>("manovra"));
 		this.txtField.setVisible(false);
-		
-		pieChartData = FXCollections.observableArrayList(new PieChart.Data("strada", 48));
-		pieChart.setData(pieChartData);
 
+		pieChartData = FXCollections.observableArrayList(new PieChart.Data("strada", 100));
+		pieChart.setData(pieChartData);
 
 	}
 

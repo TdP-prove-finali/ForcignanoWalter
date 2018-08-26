@@ -2,6 +2,7 @@ package model;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Percorso {
@@ -91,6 +92,14 @@ public class Percorso {
 	public void loadStepInPercorso(Step stepPercorso) {
 		
 		this.listaStep.add(stepPercorso);
+		this.listaStep.sort(new Comparator<Step>() {
+
+			@Override
+			public int compare(Step o1, Step o2) {
+				// TODO Auto-generated method stub
+				return Integer.compare(o1.getStep_id(), o2.getStep_id());
+			}
+		});
 		
 	}
 

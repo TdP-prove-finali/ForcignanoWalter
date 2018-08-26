@@ -63,7 +63,7 @@ public class TaxiDAO {
 
 		List<Percorso> percorsi = new ArrayList<>();
 
-		String sql = "select distinct percorso_id,taxi_id,starting_street,end_street,total_distance,total_travel_time,number_of_steps from percorso as p";
+		String sql = "select distinct percorso_id,taxi_id,starting_street,end_street,total_distance,total_travel_time,number_of_steps from percorso as p order by percorso_id";
 
 		try {
 			Connection conn = ConnectDB.getConnection();
@@ -93,7 +93,7 @@ public class TaxiDAO {
 
 		List<Step> steps = new ArrayList<>();
 
-		String sql = "select step_id,taxi_id,percorso_id,street_for_each_step,travel_time_per_step,distance_per_step,step_maneuvers,step_direction,step_location_list from step limit 1000";
+		String sql = "select step_id,taxi_id,percorso_id,street_for_each_step,travel_time_per_step,distance_per_step,step_maneuvers,step_direction,step_location_list from step order by percorso_id limit 1000";
 
 		try {
 			Connection conn = ConnectDB.getConnection();

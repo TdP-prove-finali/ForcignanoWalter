@@ -72,6 +72,15 @@ public class Model {
 		return stepIdMap;
 	}
 	
+	
+	public PercorsoIdMap getPercorsoIdMap() {
+		return percorsoIdMap;
+	}
+
+	public Graph<Posizione, DefaultWeightedEdge> getGrafo() {
+		return grafo;
+	}
+
 	public void changeWeight() {
 		if(this.pesoTempo) {
 			pesoTempo=false;
@@ -164,7 +173,6 @@ public class Model {
 
 					Double distanza = partenza.getDistance_per_step();
 					Double tempo = partenza.getTravel_time_per_step();
-				//	Peso peso = new Peso(distanza, tempo);
 
 					String[] posizionePartenza = partenza.getStep_location_list().split(",");
 					String[] posizioneArrivo = arrivo.getStep_location_list().split(",");
@@ -198,18 +206,18 @@ public class Model {
 								// versione con peso solo la distanza.
 								if (!partenzaPosizione.equals(arrivoPosizione)) {
 									if (pesoTempo) {
-										if (tempo != 0) {
+//										if (tempo != 0) {
 											Graphs.addEdge(grafo,
 													this.posizioniMap.get(partenzaPosizione.getPosizione()),
 													this.posizioniMap.get(arrivoPosizione.getPosizione()), tempo);
 
-										}
+//										}
 									} else {
-										if (distanza != 0) {
+//										if (distanza != 0) {
 											Graphs.addEdge(grafo,
 													this.posizioniMap.get(partenzaPosizione.getPosizione()),
 													this.posizioniMap.get(arrivoPosizione.getPosizione()), distanza);
-										}
+//										}
 									}
 								}
 
