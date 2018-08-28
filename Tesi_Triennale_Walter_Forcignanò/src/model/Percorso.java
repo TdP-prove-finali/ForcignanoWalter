@@ -1,6 +1,5 @@
 package model;
 
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -13,7 +12,6 @@ public class Percorso {
 	private double total_distance;
 	private double total_travel_time;
 	private int number_of_steps;
-	
 	private List<Step> listaStep;
 
 	public Percorso(int percorso_id, String taxi_id, String starting_street, String end_street, double total_distance,
@@ -26,7 +24,7 @@ public class Percorso {
 		this.total_distance = total_distance;
 		this.total_travel_time = total_travel_time;
 		this.number_of_steps = number_of_steps;
-		this.listaStep=new ArrayList<>();
+		this.listaStep = new ArrayList<>();
 	}
 
 	public int getPercorso_id() {
@@ -90,7 +88,7 @@ public class Percorso {
 	}
 
 	public void loadStepInPercorso(Step stepPercorso) {
-		
+
 		this.listaStep.add(stepPercorso);
 		this.listaStep.sort(new Comparator<Step>() {
 
@@ -100,7 +98,7 @@ public class Percorso {
 				return Integer.compare(o1.getStep_id(), o2.getStep_id());
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -108,6 +106,5 @@ public class Percorso {
 		return "Percorso [percorso_id=" + percorso_id + ", total_distance=" + total_distance + ", total_travel_time="
 				+ total_travel_time + "]";
 	}
-	
-	
+
 }

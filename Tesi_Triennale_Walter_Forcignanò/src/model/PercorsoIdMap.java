@@ -1,11 +1,11 @@
 package model;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
+//import java.util.Collections;
+//import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
+//import java.util.List;
 import java.util.Map;
 
 public class PercorsoIdMap {
@@ -30,19 +30,7 @@ public class PercorsoIdMap {
 	}
 
 	public Collection<Percorso> values() {
-		List<Percorso> percorsi = new ArrayList<>(this.map.values());
-		Collections.sort(percorsi, new Comparator<Percorso>() {
-
-			@Override
-			public int compare(Percorso a, Percorso b) {
-				// TODO Auto-generated method stub
-				return Integer.compare(a.getPercorso_id(), b.getPercorso_id());
-			}
-
-		});
-		return percorsi;
+		return this.map.values();
 	}
 
-	
-	
 }

@@ -14,8 +14,6 @@ import model.StepIdMap;
 import model.Taxi;
 import model.TaxiIdMap;
 
-
-
 public class TaxiDAO {
 	/**
 	 * Il metodo fornito carica tutti i taxi presenti nel data-set all'interno della
@@ -160,56 +158,62 @@ public class TaxiDAO {
 		return null;
 	}
 
-//	/**
-//	 * Il metodo propone di trovare dato un percorso tutti gli step a lui
-//	 * appartenenti in quanto aventi lo stesso percorso_id. Si appoggia sul metodo
-//	 * loadStepsInPercorso che poi effettivamente carica gli step all'interno
-//	 * dell'oggetto percorso.
-//	 * 
-//	 * @param percorso_id
-//	 * @param percorsoIdMap
-//	 * @param stepIdMap
-//	 */
-//	public List<Step> loadStepsInPercorso(int percorso_id, PercorsoIdMap percorsoIdMap, StepIdMap stepIdMap) {
-//
-//		List<Step> stepPercorso = new ArrayList<>();
-//
-//		String sql = "select * from percorso as p and step as s, where p.percorso_id=s.percorso_id  and p.percorso_id=?";
-//
-//		try {
-//			Percorso p = null;
-//			Connection conn = ConnectDB.getConnection();
-//			PreparedStatement st = conn.prepareStatement(sql);
-//			st.setInt(1, percorso_id);
-//			ResultSet rs = st.executeQuery();
-//
-//			while (rs.next()) {
-//
-//				p = percorsoIdMap.get(new Percorso(rs.getInt("percorso_id"), rs.getString("taxi_id"),
-//						rs.getString("starting_street"), rs.getString("end_street"), rs.getDouble("total_distance"),
-//						rs.getDouble("total_travel_time"), rs.getInt("number_of_steps")));
-//				stepPercorso.add(
-//						stepIdMap.get(new Step(rs.getString("taxi_id"), rs.getInt("percorso_id"), rs.getInt("step_id"),
-//								rs.getString("street_for_each_step"), rs.getDouble("travel_time_per_step"),
-//								rs.getDouble("distance_per_step"), rs.getString("step_maneuvers"),
-//								rs.getString("step_direction"), rs.getString("step_location_list"))));
-//
-//				// System.out.format("%d %s %s\n", rs.getInt("ccode"), rs.getString("StateAbb"),
-//				// rs.getString("StateNme"));
-//			}
-//			if (p != null)
-//				p.loadStepsInPercorso(stepPercorso);
-//			else
-//				System.out.println("percorso non trovato e ha riportato un null");
-//
-//			conn.close();
-//			return stepPercorso;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			System.out.println("Errore connessione al database");
-//			throw new RuntimeException("Error Connection Database");
-//		}
-//	}
+	// /**
+	// * Il metodo propone di trovare dato un percorso tutti gli step a lui
+	// * appartenenti in quanto aventi lo stesso percorso_id. Si appoggia sul metodo
+	// * loadStepsInPercorso che poi effettivamente carica gli step all'interno
+	// * dell'oggetto percorso.
+	// *
+	// * @param percorso_id
+	// * @param percorsoIdMap
+	// * @param stepIdMap
+	// */
+	// public List<Step> loadStepsInPercorso(int percorso_id, PercorsoIdMap
+	// percorsoIdMap, StepIdMap stepIdMap) {
+	//
+	// List<Step> stepPercorso = new ArrayList<>();
+	//
+	// String sql = "select * from percorso as p and step as s, where
+	// p.percorso_id=s.percorso_id and p.percorso_id=?";
+	//
+	// try {
+	// Percorso p = null;
+	// Connection conn = ConnectDB.getConnection();
+	// PreparedStatement st = conn.prepareStatement(sql);
+	// st.setInt(1, percorso_id);
+	// ResultSet rs = st.executeQuery();
+	//
+	// while (rs.next()) {
+	//
+	// p = percorsoIdMap.get(new Percorso(rs.getInt("percorso_id"),
+	// rs.getString("taxi_id"),
+	// rs.getString("starting_street"), rs.getString("end_street"),
+	// rs.getDouble("total_distance"),
+	// rs.getDouble("total_travel_time"), rs.getInt("number_of_steps")));
+	// stepPercorso.add(
+	// stepIdMap.get(new Step(rs.getString("taxi_id"), rs.getInt("percorso_id"),
+	// rs.getInt("step_id"),
+	// rs.getString("street_for_each_step"), rs.getDouble("travel_time_per_step"),
+	// rs.getDouble("distance_per_step"), rs.getString("step_maneuvers"),
+	// rs.getString("step_direction"), rs.getString("step_location_list"))));
+	//
+	// // System.out.format("%d %s %s\n", rs.getInt("ccode"),
+	// rs.getString("StateAbb"),
+	// // rs.getString("StateNme"));
+	// }
+	// if (p != null)
+	// p.loadStepsInPercorso(stepPercorso);
+	// else
+	// System.out.println("percorso non trovato e ha riportato un null");
+	//
+	// conn.close();
+	// return stepPercorso;
+	// } catch (SQLException e) {
+	// e.printStackTrace();
+	// System.out.println("Errore connessione al database");
+	// throw new RuntimeException("Error Connection Database");
+	// }
+	// }
 
 	// metodo forse inutile sotto
 	/**
@@ -330,6 +334,4 @@ public class TaxiDAO {
 		return returnValue;
 	}
 
-	
 }
-

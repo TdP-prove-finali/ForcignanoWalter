@@ -9,18 +9,17 @@ public class Posizione {
 	private String nomeLuogo;
 	private String manovra;
 
-	public Posizione(LatLng posizione, String nomeLuogo, String manovra) {
+	public Posizione(LatLng posizione, String nomeLuogo) {
 		super();
 		this.posizione = posizione;
 		this.nomeLuogo = nomeLuogo;
-		this.manovra= manovra;
 	}
 
-	public LatLng getPosizione() {
+	public LatLng getCoordinate() {
 		return posizione;
 	}
 
-	public void setPosizione(LatLng posizione) {
+	public void setCoordinate(LatLng posizione) {
 		this.posizione = posizione;
 	}
 
@@ -32,7 +31,6 @@ public class Posizione {
 		this.nomeLuogo = nomeLuogo;
 	}
 
-	
 	public String getManovra() {
 		return manovra;
 	}
@@ -42,20 +40,16 @@ public class Posizione {
 	}
 
 	@Override
-	public String toString() {
-		return nomeLuogo+" "+posizione.toString();
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((nomeLuogo == null) ? 0 : nomeLuogo.hashCode());
 		result = prime * result + ((posizione == null) ? 0 : posizione.hashCode());
 		return result;
 	}
 
-	
+	/**
+	 * Due posizioni risultano uguali se hanno le stesse coordinate.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -65,11 +59,6 @@ public class Posizione {
 		if (getClass() != obj.getClass())
 			return false;
 		Posizione other = (Posizione) obj;
-		if (nomeLuogo == null) {
-			if (other.nomeLuogo != null)
-				return false;
-		} else if (!nomeLuogo.equals(other.nomeLuogo))
-			return false;
 		if (posizione == null) {
 			if (other.posizione != null)
 				return false;
@@ -77,7 +66,10 @@ public class Posizione {
 			return false;
 		return true;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return nomeLuogo + " " + posizione.toString();
+	}
 
 }

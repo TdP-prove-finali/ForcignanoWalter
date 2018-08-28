@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import com.javadocmd.simplelatlng.LatLng;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -76,6 +74,9 @@ public class Controller {
 	@FXML // fx:id="pieChart"
 	private PieChart pieChart; // Value injected by FXMLLoader
 
+	@FXML // fx:id="labelResult"
+	private Label labelResult; // Value injected by FXMLLoader
+
 	private ObservableList<PieChart.Data> pieChartData;
 	private Stage secondaryStage;
 
@@ -110,26 +111,55 @@ public class Controller {
 				// this.txtField.setText("Il percorso ottimale è: \n" +
 				// percorsoOttimale.toString() + " --- "
 				// + model.calcolaPeso(percorsoOttimale));
+				riportaStatistiche(percorsoOttimale);
 
-				ObservableList<newRow> values = FXCollections.observableArrayList();
-
-				pieChartData.removeAll(pieChartData);
-
+				double pesoTotale = 0;
 				for (int i = 0; i < percorsoOttimale.size(); i++) {
-
-					values.add(new newRow(percorsoOttimale.get(i).getStringPosizione(),
-							percorsoOttimale.get(i).getPeso(), percorsoOttimale.get(i).getPosizione().getManovra(),
-							percorsoOttimale.get(i).getPosizione().getPosizione().toString()));
-
-					pieChartData.add(new Data(percorsoOttimale.get(i).getPosizione().getNomeLuogo(),
-							percorsoOttimale.get(i).getPeso()));
-
+					pesoTotale += percorsoOttimale.get(i).getPeso();
 				}
-				tableView.setItems(values);
+
+				if (model.isPesoTempo()) {
+
+					int ore = (int) (pesoTotale / 3600);
+					int minuti = (int) (pesoTotale % 3600 / 60);
+					int secondi = (int) (pesoTotale % 3600 % 60);
+
+					this.labelResult.setText("Tempo stimato per raggiungere la destinazione in: " + ore + " ore "
+							+ minuti + " minuti " + secondi + " secondi.");
+
+				} else
+					this.labelResult.setText("Il numero totale di m da percorrere è " + pesoTotale);
 				this.numeroManovre.setText("" + percorsoOttimale.size());
 			}
 
 		}
+	}
+
+	/**
+	 * Metodo che ha lo scopo di calcolare e riportare a schermo le statistiche del
+	 * percorso ottimo.
+	 * 
+	 * @param percorsoOttimale
+	 */
+	public void riportaStatistiche(List<PosizionePiuPeso> percorsoOttimale) {
+
+		ObservableList<newRow> values = FXCollections.observableArrayList();
+
+		pieChartData.removeAll(pieChartData);
+
+		for (int i = 0; i < percorsoOttimale.size(); i++) {
+
+			values.add(new newRow(percorsoOttimale.get(i).getStringPosizione(), percorsoOttimale.get(i).getPeso(),
+					percorsoOttimale.get(i).getPosizione().getManovra(),
+					percorsoOttimale.get(i).getPosizione().getCoordinate().toString()));
+
+			pieChartData.add(
+					new Data(percorsoOttimale.get(i).getPosizione().getNomeLuogo(), percorsoOttimale.get(i).getPeso()));
+
+		}
+		values.get(0).setManovra("departure");
+		values.get(percorsoOttimale.size() - 1).setManovra("arrive");
+		tableView.setItems(values);
 	}
 
 	@FXML
@@ -142,11 +172,11 @@ public class Controller {
 		this.txtField.setVisible(true);
 
 		if (model.isPesoTempo()) {
-			this.txtField.setText("\n Modifiche apportate al grafo.\n Ora i pesi del grafo sono secondi.");
+			this.txtField.setText("\n Modifiche apportate al grafo.\n Ora i pesi del grafo sono secondi trascorsi.");
 			this.colonnaPeso.setText("Tempo Percorrenza (s)");
 		} else {
-			this.txtField.setText("\n Modifiche apportate al grafo.\n Ora i pesi del grafo sono km percorsi.");
-			this.colonnaPeso.setText("Distanza Percorsa (km)");
+			this.txtField.setText("\n Modifiche apportate al grafo.\n Ora i pesi del grafo sono m percorsi.");
+			this.colonnaPeso.setText("Distanza Percorsa (m)");
 		}
 
 	}
@@ -162,11 +192,15 @@ public class Controller {
 
 			PieChartController controller = (PieChartController) loader.getController();
 
+			controller.setFriend(this);
+
 			ObservableList<PieChart.Data> pieChartData2 = FXCollections.observableArrayList(this.pieChartData);
 			controller.setDataForPieChart(pieChartData2);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			secondaryStage.setScene(scene);
 			secondaryStage.show();
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -203,6 +237,7 @@ public class Controller {
 		assert colonnaNumeroManovre != null : "fx:id=\"colonnaNumeroManovre\" was not injected: check your FXML file 'tesi.fxml'.";
 		assert colonnaCoordinate != null : "fx:id=\"colonnaCoordinate\" was not injected: check your FXML file 'tesi.fxml'.";
 		assert pieChart != null : "fx:id=\"pieChart\" was not injected: check your FXML file 'tesi.fxml'.";
+		assert labelResult != null : "fx:id=\"labelResult\" was not injected: check your FXML file 'tesi.fxml'.";
 
 		this.colonnaPercorsoEseguito.setCellValueFactory(new PropertyValueFactory<>("posizionePiuPeso"));
 		this.colonnaPeso.setCellValueFactory(new PropertyValueFactory<>("peso"));
@@ -223,5 +258,14 @@ public class Controller {
 		// boxDestinazione.getItems().addAll(model.getPositionsList());
 		// questo box potrei caricarlo una volta scelta una destinazione.
 
+	}
+
+	public void riportaGraficoATorta(ObservableList<Data> pieChartData2) {
+
+		pieChartData.removeAll(pieChartData);
+		for(Data d :pieChartData2) {
+			pieChartData.add(d);
+		}
+		
 	}
 }

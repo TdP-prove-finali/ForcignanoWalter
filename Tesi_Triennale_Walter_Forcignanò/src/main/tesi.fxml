@@ -17,9 +17,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="795.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
    <center>
-      <VBox spacing="10.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="BASELINE_LEFT" spacing="50.0">
                <children>
@@ -55,7 +55,10 @@
                   <Label text="Seleziona se desideri info su km percorsi o s trascorsi : ">
                      <HBox.margin>
                         <Insets />
-                     </HBox.margin></Label>
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="40.0" />
+                     </padding></Label>
                   <RadioButton fx:id="PesoTempo" mnemonicParsing="false" onAction="#handleChangePeso" rotate="180.0" />
                   <Label text="Numero Manovre Effettuate: ">
                      <padding>
@@ -75,15 +78,20 @@
             </TextField>
             <TableView fx:id="tableView">
               <columns>
-                <TableColumn fx:id="colonnaPercorsoEseguito" editable="false" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Percorso Eseguito" />
-                  <TableColumn fx:id="colonnaPeso" editable="false" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Distanza  Percorsa (km)" />
-                  <TableColumn fx:id="colonnaNumeroManovre" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Manovra Eseguita" />
-                  <TableColumn fx:id="colonnaCoordinate" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Coordinate Geografiche" />
+                <TableColumn fx:id="colonnaPercorsoEseguito" editable="false" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="-1.0" text="Percorso Eseguito" />
+                  <TableColumn fx:id="colonnaPeso" editable="false" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="-1.0" text="Distanza  Percorsa (m)" />
+                  <TableColumn fx:id="colonnaNumeroManovre" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="-1.0" text="Manovra Eseguita" />
+                  <TableColumn fx:id="colonnaCoordinate" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="-1.0" text="Coordinate Geografiche" />
               </columns>
                <padding>
                   <Insets left="10.0" right="10.0" />
                </padding>
             </TableView>
+            <Label fx:id="labelResult" alignment="CENTER" contentDisplay="CENTER">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
          </children>
          <padding>
             <Insets top="20.0" />
@@ -114,7 +122,11 @@
                </children>
             </VBox>
             <Separator orientation="VERTICAL" />
-            <PieChart fx:id="pieChart" onMouseClicked="#handleEspandiGrafo" title="Statistiche Percorso" />
+            <VBox alignment="CENTER">
+               <children>
+                  <PieChart fx:id="pieChart" onMouseClicked="#handleEspandiGrafo" title="Statistiche Percorso" />
+               </children>
+            </VBox>
          </children>
          <BorderPane.margin>
             <Insets top="10.0" />

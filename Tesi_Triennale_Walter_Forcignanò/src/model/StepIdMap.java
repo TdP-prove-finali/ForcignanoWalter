@@ -12,23 +12,19 @@ public class StepIdMap {
 	// la posizione è una variabile di tipo string che nella tabella è salvata come
 	// steplocationList
 
-	private Map<String, Step> map = new HashMap<String, Step>();
+	private Map<Step, Step> map = new HashMap<Step, Step>();
 
 	public void put(Step Step) {
-		this.map.put(Step.getStep_location_list(), Step);
+		this.map.put(Step, Step);
 	}
 
 	public Step get(Step step) {
-		if (this.map.containsKey(step.getStep_location_list())) {
-			return this.map.get(step.getStep_location_list());
+		if (this.map.containsKey(step)) {
+			return this.map.get(step);
 		}
 
-		this.map.put(step.getStep_location_list(), step);
+		this.map.put(step, step);
 		return step;
-	}
-
-	public Step get(String posizione) {
-		return this.map.get(posizione);
 	}
 
 	public Collection<Step> values() {

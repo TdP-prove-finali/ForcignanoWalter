@@ -30,7 +30,9 @@ public class newRow {
 	public String getCoordinate() {
 		return coordinate;
 	}
-	
-	
+
+	public void setManovra(String manovra) {
+		this.manovra = manovra;
+	}
 
 }
