@@ -10,7 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jgrapht.Graph;
+import org.jgrapht.GraphPath;
 import org.jgrapht.Graphs;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import org.jgrapht.traverse.BreadthFirstIterator;
@@ -83,7 +85,7 @@ public class Model {
 
 				LatLng ll = new LatLng(latitude, longitude);
 				String nomeLuogo = s.getStreet_for_each_step();
-				//String manovra = s.getStep_direction();
+				// String manovra = s.getStep_direction();
 
 				// System.out.println(ll.toString());
 				if (!posizioniMap.containsKey(ll)) {
@@ -117,10 +119,8 @@ public class Model {
 					Step arrivo = stepIdMap.get(steps.get(i + 1));
 					String manovra = partenza.getStep_direction();
 
-
 					Double distanza = partenza.getDistance_per_step();
 					Double tempo = partenza.getTravel_time_per_step();
-					
 
 					String[] coordinatePartenza = partenza.getStep_location_list().split(",");
 					String[] coordinateArrivo = arrivo.getStep_location_list().split(",");
@@ -140,7 +140,7 @@ public class Model {
 						if (this.posizioniMap.containsKey(part) && this.posizioniMap.containsKey(arr)) {
 
 							Posizione partenzaPosizione = this.posizioniMap.get(part);
-							
+
 							Posizione arrivoPosizione = this.posizioniMap.get(arr);
 
 							if (!this.grafo.containsEdge(partenzaPosizione, arrivoPosizione)) {
@@ -243,8 +243,40 @@ public class Model {
 		 * nodo di partenza non è possibile raggiungere il nodo di destinazione.
 		 */
 
-		parziale.add(new PosizionePiuPeso(posizioniMap.get(partenza.getCoordinate()), 0));
-		recursive(parziale, posizioniMap.get(destinazione.getCoordinate()));
+		if (stepIdMap.values().size() > 0) {
+
+			DijkstraShortestPath<Posizione, DefaultWeightedEdge> dsp = new DijkstraShortestPath<Posizione, DefaultWeightedEdge>(
+					grafo);
+
+			GraphPath<Posizione, DefaultWeightedEdge> camminoOttimo = dsp.getPath(partenza, destinazione);
+
+			if (camminoOttimo != null) {
+
+				List<Posizione> posizioni = camminoOttimo.getVertexList();
+
+				List<PosizionePiuPeso> list = new ArrayList<>();
+
+				list.add(new PosizionePiuPeso(camminoOttimo.getStartVertex(), 0));
+
+				int i;
+
+				for (i = 1; i < posizioni.size(); i++) {
+
+					list.add(new PosizionePiuPeso(posizioni.get(i),
+							grafo.getEdgeWeight(camminoOttimo.getEdgeList().get(i-1))));
+
+				}
+
+				percorsoOttimale = new ArrayList<>(list);
+
+			} else {
+				percorsoOttimale = new ArrayList<>();
+			}
+
+		} else {
+			parziale.add(new PosizionePiuPeso(posizioniMap.get(partenza.getCoordinate()), 0));
+			recursive(parziale, posizioniMap.get(destinazione.getCoordinate()));
+		}
 
 		return percorsoOttimale;
 	}

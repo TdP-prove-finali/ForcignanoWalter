@@ -108,9 +108,7 @@ public class Controller {
 			}
 
 			else {
-				// this.txtField.setText("Il percorso ottimale è: \n" +
-				// percorsoOttimale.toString() + " --- "
-				// + model.calcolaPeso(percorsoOttimale));
+			
 				riportaStatistiche(percorsoOttimale);
 
 				double pesoTotale = 0;
@@ -141,7 +139,7 @@ public class Controller {
 	 * 
 	 * @param percorsoOttimale
 	 */
-	public void riportaStatistiche(List<PosizionePiuPeso> percorsoOttimale) {
+	private void riportaStatistiche(List<PosizionePiuPeso> percorsoOttimale) {
 
 		ObservableList<newRow> values = FXCollections.observableArrayList();
 
@@ -192,7 +190,6 @@ public class Controller {
 
 			PieChartController controller = (PieChartController) loader.getController();
 
-			controller.setFriend(this);
 
 			ObservableList<PieChart.Data> pieChartData2 = FXCollections.observableArrayList(this.pieChartData);
 			controller.setDataForPieChart(pieChartData2);
@@ -260,12 +257,4 @@ public class Controller {
 
 	}
 
-	public void riportaGraficoATorta(ObservableList<Data> pieChartData2) {
-
-		pieChartData.removeAll(pieChartData);
-		for(Data d :pieChartData2) {
-			pieChartData.add(d);
-		}
-		
-	}
 }

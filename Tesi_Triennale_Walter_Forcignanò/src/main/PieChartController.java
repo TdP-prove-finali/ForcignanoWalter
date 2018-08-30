@@ -5,7 +5,6 @@ package main;
  */
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.PieChart.Data;
-import javafx.stage.WindowEvent;
 
 public class PieChartController {
 
@@ -38,19 +36,6 @@ public class PieChartController {
 		this.pieChartData2 = pieChartData2;
 
 		this.pieChart2.setData(pieChartData2);
-
-	}
-//gestione dell'evento non funziona
-	public void closedWindow(WindowEvent we) {
-		if (we.getEventType().equals(WindowEvent.WINDOW_CLOSE_REQUEST)) {
-			controller.riportaGraficoATorta(pieChartData2);
-
-		}
-	}
-
-	public void setFriend(Controller controller) {
-		this.controller = controller;
-		// TODO Auto-generated method stub
 
 	}
 }
