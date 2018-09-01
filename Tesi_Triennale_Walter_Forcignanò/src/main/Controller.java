@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import com.javadocmd.simplelatlng.LatLng;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -37,6 +40,15 @@ public class Controller {
 
 	@FXML // URL location of the FXML file that was given to the FXMLLoader
 	private URL location;
+
+	@FXML // fx:id="slider"
+	private Slider slider; // Value injected by FXMLLoader
+	
+	@FXML // fx:id="verticiGrafo"
+    private Label verticiGrafo; // Value injected by FXMLLoader
+
+    @FXML // fx:id="archiGrafo"
+    private Label archiGrafo; // Value injected by FXMLLoader
 
 	@FXML // fx:id="boxPartenza"
 	private ComboBox<Posizione> boxPartenza; // Value injected by FXMLLoader
@@ -78,7 +90,10 @@ public class Controller {
 	private Label labelResult; // Value injected by FXMLLoader
 
 	private ObservableList<PieChart.Data> pieChartData;
+	
 	private Stage secondaryStage;
+	
+	private final int NUMMAXSTEP=4671990;
 
 	@FXML
 	void handleCalcolaPercorso(ActionEvent event) {
@@ -108,7 +123,7 @@ public class Controller {
 			}
 
 			else {
-			
+
 				riportaStatistiche(percorsoOttimale);
 
 				double pesoTotale = 0;
@@ -190,14 +205,12 @@ public class Controller {
 
 			PieChartController controller = (PieChartController) loader.getController();
 
-
 			ObservableList<PieChart.Data> pieChartData2 = FXCollections.observableArrayList(this.pieChartData);
 			controller.setDataForPieChart(pieChartData2);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			secondaryStage.setScene(scene);
 			secondaryStage.show();
-			
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -219,9 +232,25 @@ public class Controller {
 		}
 
 	}
+	
+	@FXML
+    void handleCaricaStep(MouseEvent event) {
+	
+		
+		int numeroStep=(int)this.slider.getValue();
+		
+		model.caricaStep(numeroStep);
+		model.creaGrafo();
+		
+
+    }
+
 
 	@FXML // This method is called by the FXMLLoader when initialization is complete
 	void initialize() {
+        assert slider != null : "fx:id=\"slider\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert verticiGrafo != null : "fx:id=\"verticiGrafo\" was not injected: check your FXML file 'tesi.fxml'.";
+        assert archiGrafo != null : "fx:id=\"archiGrafo\" was not injected: check your FXML file 'tesi.fxml'.";
 		assert boxPartenza != null : "fx:id=\"boxPartenza\" was not injected: check your FXML file 'tesi.fxml'.";
 		assert boxDestinazione != null : "fx:id=\"boxDestinazione\" was not injected: check your FXML file 'tesi.fxml'.";
 		assert btnPercorso != null : "fx:id=\"btnPercorso\" was not injected: check your FXML file 'tesi.fxml'.";
@@ -244,12 +273,22 @@ public class Controller {
 
 		pieChartData = FXCollections.observableArrayList(new PieChart.Data("strada", 100));
 		pieChart.setData(pieChartData);
+		
+		//dim minima.
+		slider.setMin(0);
+		//dimensione massima step da caricare nel sistema.
+		slider.setMax(NUMMAXSTEP);
+		slider.setMajorTickUnit(NUMMAXSTEP/6);
+		slider.setMinorTickCount(3);
+		
 
 	}
 
 	public void setModel(Model model) {
 		this.model = model;
 		model.creaGrafo();
+		this.verticiGrafo.textProperty().bind(model.getNumVertici());
+		this.archiGrafo.textProperty().bind(model.getNumArchi());
 
 		boxPartenza.getItems().addAll(model.getPositionsList());
 		// boxDestinazione.getItems().addAll(model.getPositionsList());

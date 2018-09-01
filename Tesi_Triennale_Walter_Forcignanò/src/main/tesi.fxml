@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -21,6 +22,29 @@
    <center>
       <VBox alignment="CENTER" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
+            <VBox alignment="TOP_CENTER" spacing="10.0">
+               <children>
+                  <Label text="Definire il numero di step da caricare in memoria: " />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                     <children>
+                        <Slider fx:id="slider" maxWidth="500.0" minWidth="500.0" onMouseReleased="#handleCaricaStep" showTickLabels="true" showTickMarks="true" />
+                        <VBox alignment="CENTER_RIGHT" spacing="10.0">
+                           <children>
+                              <Label text="Vertici :" />
+                              <Label text="Archi :" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                           <children>
+                              <Label fx:id="verticiGrafo" />
+                              <Label fx:id="archiGrafo" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <Label text="Attenzione! Per poter caricare tutti gli step, è necessario possedere una RAM di notevoli dimensioni." />
+               </children>
+            </VBox>
             <HBox alignment="BASELINE_LEFT" spacing="50.0">
                <children>
                   <VBox>
@@ -41,7 +65,7 @@
                         <ComboBox fx:id="boxDestinazione" minWidth="700.0" />
                      </children>
                   </VBox>
-                  <Button fx:id="btnPercorso" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleCalcolaPercorso" text="Calcola Percorso" textAlignment="CENTER" />
+                  <Button fx:id="btnPercorso" alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleCalcolaPercorso" text="Calcola Percorso" textAlignment="CENTER" />
                </children>
                <opaqueInsets>
                   <Insets />
@@ -84,7 +108,7 @@
                   <TableColumn fx:id="colonnaCoordinate" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="-1.0" text="Coordinate Geografiche" />
               </columns>
                <padding>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets left="1.0" right="1.0" />
                </padding>
             </TableView>
             <Label fx:id="labelResult" alignment="CENTER" contentDisplay="CENTER">

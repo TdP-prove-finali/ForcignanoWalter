@@ -4,23 +4,23 @@ import com.javadocmd.simplelatlng.LatLng;
 
 public class Posizione {
 
-	private LatLng posizione;
+	private LatLng coordinate;
 
 	private String nomeLuogo;
 	private String manovra;
 
-	public Posizione(LatLng posizione, String nomeLuogo) {
+	public Posizione(LatLng coordinate, String nomeLuogo) {
 		super();
-		this.posizione = posizione;
+		this.coordinate = coordinate;
 		this.nomeLuogo = nomeLuogo;
 	}
 
 	public LatLng getCoordinate() {
-		return posizione;
+		return coordinate;
 	}
 
-	public void setCoordinate(LatLng posizione) {
-		this.posizione = posizione;
+	public void setCoordinate(LatLng coordinate) {
+		this.coordinate = coordinate;
 	}
 
 	public String getNomeLuogo() {
@@ -43,7 +43,7 @@ public class Posizione {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((posizione == null) ? 0 : posizione.hashCode());
+		result = prime * result + ((coordinate == null) ? 0 : coordinate.hashCode());
 		return result;
 	}
 
@@ -59,17 +59,30 @@ public class Posizione {
 		if (getClass() != obj.getClass())
 			return false;
 		Posizione other = (Posizione) obj;
-		if (posizione == null) {
-			if (other.posizione != null)
+		if (coordinate == null) {
+			if (other.coordinate != null)
 				return false;
-		} else if (!posizione.equals(other.posizione))
+		} else if (!coordinate.equals(other.coordinate)) {
+//			
+//			double latA =coordinate.getLatitude();
+//			double longA = coordinate.getLongitude();
+//			
+//			double latB = other.coordinate.getLatitude();
+//			double longB =other.coordinate.getLongitude();
+//			
+//			double precisione = 0.0002; //corrisponde a circa 22 metri.
+//			if((latA+precisione)<latB || (latA-precisione)<latB)
+		
 			return false;
+		}
 		return true;
 	}
 
+	
 	@Override
 	public String toString() {
-		return nomeLuogo + " " + posizione.toString();
+		return nomeLuogo + " " + coordinate.toString();
 	}
 
+	
 }

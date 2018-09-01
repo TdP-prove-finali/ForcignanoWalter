@@ -42,4 +42,8 @@ public class StepIdMap {
 
 		return steps;
 	}
+
+	public void remove(Step s) {
+		map.remove(s);
+	}
 }

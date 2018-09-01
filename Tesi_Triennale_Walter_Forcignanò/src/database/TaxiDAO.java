@@ -87,15 +87,16 @@ public class TaxiDAO {
 
 	}
 
-	public List<Step> loadAllStep(StepIdMap stepIdMap) {
+	public List<Step> loadAllStep(StepIdMap stepIdMap, int numeroStep) {
 
 		List<Step> steps = new ArrayList<>();
 
-		String sql = "select step_id,taxi_id,percorso_id,street_for_each_step,travel_time_per_step,distance_per_step,step_maneuvers,step_direction,step_location_list from step order by percorso_id limit 7";
+		String sql = "select step_id,taxi_id,percorso_id,street_for_each_step,travel_time_per_step,distance_per_step,step_maneuvers,step_direction,step_location_list from step order by percorso_id limit ?";
 
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, numeroStep);
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
@@ -117,6 +118,8 @@ public class TaxiDAO {
 		}
 
 	}
+	
+
 
 	/**
 	 * Dato un taxi il metodo calcola tutti i percorsi da lui effettuati.

@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
@@ -20,17 +19,25 @@ import org.jgrapht.traverse.BreadthFirstIterator;
 import com.javadocmd.simplelatlng.LatLng;
 
 import database.TaxiDAO;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.StringProperty;
 
 public class Model {
 
 	private TaxiDAO dao;
 	private PercorsoIdMap percorsoIdMap;
 	private StepIdMap stepIdMap;
-	private TaxiIdMap taxiIdMap;
+//	private TaxiIdMap taxiIdMap;
 	private Graph<Posizione, DefaultWeightedEdge> grafo;
 	private boolean pesoTempo;
 	private Map<LatLng, Posizione> posizioniMap;
 	private List<PosizionePiuPeso> percorsoOttimale;
+
+	private StringProperty numVertici;
+	private StringProperty numArchi;
+
+	private int numeroStep;
 
 	public Model() {
 		super();
@@ -38,12 +45,16 @@ public class Model {
 		dao = new TaxiDAO();
 		percorsoIdMap = new PercorsoIdMap();
 		stepIdMap = new StepIdMap();
-		taxiIdMap = new TaxiIdMap();
-		percorsoOttimale = new ArrayList<>();
 
+//		taxiIdMap = new TaxiIdMap();
+		percorsoOttimale = new ArrayList<>();
+		int numeroStep = 10000;
+		numVertici=new ReadOnlyStringWrapper();
+		numArchi = new ReadOnlyStringWrapper();
 		// int taxiDimension = dao.loadTaxi(taxiIdMap).size();
 		int percorsiDimension = dao.loadAllPercorsi(percorsoIdMap).size();
-		int stepsDimension = dao.loadAllStep(stepIdMap).size();
+		// il caricamento degli step in memoria dipende
+		int stepsDimension = dao.loadAllStep(stepIdMap, numeroStep).size();
 
 		// System.out.println(taxiDimension);
 		System.out.println(percorsiDimension);
@@ -77,6 +88,9 @@ public class Model {
 		posizioniMap = new HashMap<>();
 
 		for (Step s : this.stepIdMap.values()) {
+			
+//			stepIdMap.remove(s);
+			
 			String[] posizione = s.getStep_location_list().split(",");
 
 			try {
@@ -104,7 +118,10 @@ public class Model {
 
 		Graphs.addAllVertices(grafo, posizioniMap.values());
 
+		numVertici.setValue(""+grafo.vertexSet().size());
+
 		System.out.println("Dimensione vertici del grafo: " + this.grafo.vertexSet().size());
+		System.out.println("Dimensione stepId del grafo: " + stepIdMap.values().size());
 
 		// da qui inizio ad aggingere gli archi.
 		for (Percorso p : this.percorsoIdMap.values()) {
@@ -164,8 +181,8 @@ public class Model {
 								}
 
 							} else {
-								// se il peso trovato è minore di quello presente già nel grafo aggiorno la mia
-								// mappa.
+								// se il peso trovato è minore di quello presente già nel grafo aggiorno il
+								// grafo
 								// System.out.println(this.grafo.getEdge(partenzaPosizione,
 								// arrivoPosizione).toString());
 								// System.out.println(this.grafo.getEdgeWeight(this.grafo.getEdge(partenzaPosizione,
@@ -190,8 +207,9 @@ public class Model {
 									if (grafo
 											.getEdgeWeight(grafo.getEdge(partenzaPosizione, arrivoPosizione)) > tempo) {
 										grafo.setEdgeWeight(grafo.getEdge(partenzaPosizione, arrivoPosizione), tempo);
-										System.out.println("Peso arco aggiornato" + partenzaPosizione.toString() + " "
-												+ arrivoPosizione.toString() + " " + tempo);
+										// System.out.println("Peso arco aggiornato" + partenzaPosizione.toString() + "
+										// "
+										// + arrivoPosizione.toString() + " " + tempo);
 
 									}
 
@@ -217,6 +235,7 @@ public class Model {
 		// System.out.println(d.toString() + "----- " + grafo.getEdgeWeight(d));
 		//
 		// }
+		numArchi.setValue(""+grafo.edgeSet().size()); 
 
 	}
 
@@ -230,8 +249,6 @@ public class Model {
 	 * @return
 	 */
 	public List<PosizionePiuPeso> calcolaPercorsoOttimale(Posizione partenza, Posizione destinazione) {
-		List<PosizionePiuPeso> parziale = new ArrayList<>();
-		percorsoOttimale = new ArrayList<>();
 		/*
 		 * Il parziale è una lista di posizioni. La soluzione Ottimale la trovo solo
 		 * dopo aver cercato in tutto il grafo. Come una soluzione viene salvata per
@@ -243,81 +260,35 @@ public class Model {
 		 * nodo di partenza non è possibile raggiungere il nodo di destinazione.
 		 */
 
-		if (stepIdMap.values().size() > 0) {
+		DijkstraShortestPath<Posizione, DefaultWeightedEdge> dsp = new DijkstraShortestPath<Posizione, DefaultWeightedEdge>(
+				grafo);
 
-			DijkstraShortestPath<Posizione, DefaultWeightedEdge> dsp = new DijkstraShortestPath<Posizione, DefaultWeightedEdge>(
-					grafo);
+		GraphPath<Posizione, DefaultWeightedEdge> camminoOttimo = dsp.getPath(partenza, destinazione);
 
-			GraphPath<Posizione, DefaultWeightedEdge> camminoOttimo = dsp.getPath(partenza, destinazione);
+		if (camminoOttimo != null) {
 
-			if (camminoOttimo != null) {
+			List<Posizione> posizioni = camminoOttimo.getVertexList();
 
-				List<Posizione> posizioni = camminoOttimo.getVertexList();
+			List<PosizionePiuPeso> list = new ArrayList<>();
 
-				List<PosizionePiuPeso> list = new ArrayList<>();
+			list.add(new PosizionePiuPeso(camminoOttimo.getStartVertex(), 0));
 
-				list.add(new PosizionePiuPeso(camminoOttimo.getStartVertex(), 0));
+			int i;
 
-				int i;
+			for (i = 1; i < posizioni.size(); i++) {
 
-				for (i = 1; i < posizioni.size(); i++) {
+				list.add(new PosizionePiuPeso(posizioni.get(i),
+						grafo.getEdgeWeight(camminoOttimo.getEdgeList().get(i - 1))));
 
-					list.add(new PosizionePiuPeso(posizioni.get(i),
-							grafo.getEdgeWeight(camminoOttimo.getEdgeList().get(i-1))));
-
-				}
-
-				percorsoOttimale = new ArrayList<>(list);
-
-			} else {
-				percorsoOttimale = new ArrayList<>();
 			}
+
+			percorsoOttimale = new ArrayList<>(list);
 
 		} else {
-			parziale.add(new PosizionePiuPeso(posizioniMap.get(partenza.getCoordinate()), 0));
-			recursive(parziale, posizioniMap.get(destinazione.getCoordinate()));
+			percorsoOttimale = new ArrayList<>();
 		}
-
 		return percorsoOttimale;
-	}
 
-	/**
-	 * Metodo che attraverso la ricorsione calcola il percorso ottimale.
-	 * 
-	 * @param parziale
-	 * @param destinazione
-	 */
-	private void recursive(List<PosizionePiuPeso> parziale, Posizione destinazione) {
-
-		// se è ottima salvo
-		if (parziale.get(parziale.size() - 1).getPosizione().equals(destinazione)) {
-			// sono arrivato a destinazione
-			// allora calcolo il valore della soluzione
-			if (calcolaPeso(parziale) < calcolaPeso(this.percorsoOttimale) || this.percorsoOttimale.isEmpty()) {
-				percorsoOttimale = new ArrayList<>(parziale);
-			}
-
-		}
-
-		PosizionePiuPeso corrente = parziale.get(parziale.size() - 1);
-		// List<Posizione> successori=Graphs.successorListOf(grafo, corrente);
-
-		Set<DefaultWeightedEdge> successori = grafo.outgoingEdgesOf(corrente.getPosizione());
-
-		for (DefaultWeightedEdge arco : successori) {
-			// creo un nuovo oggetto che oltre alla posizione ha il peso dell'arco.
-			// in questo modo risulta facile calcolare il valore del peso totale di un
-			// percorso.
-			Posizione successore = Graphs.getOppositeVertex(grafo, arco, corrente.getPosizione());
-			double peso = grafo.getEdgeWeight(arco);
-			PosizionePiuPeso successivo = new PosizionePiuPeso(successore, peso);
-
-			if (!parziale.contains(successivo)) {
-				parziale.add(successivo);
-				recursive(parziale, destinazione);
-				parziale.remove(parziale.size() - 1);
-			}
-		}
 	}
 
 	/**
@@ -391,6 +362,10 @@ public class Model {
 		return percorsoOttimale;
 	}
 
+	public TaxiDAO getDao() {
+		return dao;
+	}
+
 	public boolean isPesoTempo() {
 		return pesoTempo;
 	}
@@ -411,12 +386,46 @@ public class Model {
 		return grafo;
 	}
 
+
+	public ReadOnlyStringProperty getNumVertici() {
+		return numVertici;
+	}
+
+	public ReadOnlyStringProperty getNumArchi() {
+		return numArchi;
+	}
+
 	public void changeWeight() {
 		if (this.pesoTempo) {
 			pesoTempo = false;
 		} else {
 			pesoTempo = true;
 		}
+
+	}
+
+	public int getNumeroStep() {
+		return numeroStep;
+	}
+
+	public void setNumeroStep(int numeroStep) {
+		this.numeroStep = numeroStep;
+	}
+
+	public void caricaStep(int numeroStep) {
+
+		this.numeroStep = numeroStep;
+		stepIdMap = new StepIdMap();
+		percorsoIdMap = new PercorsoIdMap();
+
+		dao.loadAllPercorsi(percorsoIdMap);
+		dao.loadAllStep(stepIdMap, this.numeroStep);
+
+		for (Step step : stepIdMap.values()) {
+			this.percorsoIdMap.get(step.getPercorso_id()).loadStepInPercorso(step);
+		}
+
+		System.out.println("dimensione stepidmap:  " + stepIdMap.values().size());
 
 	}
 
