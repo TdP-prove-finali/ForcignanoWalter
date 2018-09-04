@@ -141,7 +141,7 @@ public class Controller {
 							+ minuti + " minuti " + secondi + " secondi.");
 
 				} else
-					this.labelResult.setText("Il numero totale di m da percorrere è " + pesoTotale);
+					this.labelResult.setText("Il numero totale di m da percorrere è " + model.arrotonda(pesoTotale, 2));
 				this.numeroManovre.setText("" + percorsoOttimale.size());
 			}
 
@@ -157,21 +157,31 @@ public class Controller {
 	private void riportaStatistiche(List<PosizionePiuPeso> percorsoOttimale) {
 
 		ObservableList<newRow> values = FXCollections.observableArrayList();
+		String partenza ="depart";
+		String arrivo ="arrive";
 
 		pieChartData.removeAll(pieChartData);
+		
+		for (int i =0; i < percorsoOttimale.size(); i++) {
 
-		for (int i = 0; i < percorsoOttimale.size(); i++) {
-
+			if(i!=percorsoOttimale.size()-1) {
 			values.add(new newRow(percorsoOttimale.get(i).getStringPosizione(), percorsoOttimale.get(i).getPeso(),
-					percorsoOttimale.get(i).getPosizione().getManovra(),
-					percorsoOttimale.get(i).getPosizione().getCoordinate().toString()));
+					percorsoOttimale.get(i).getPosizione().getManovra(percorsoOttimale.get(i+1).getPosizione()),
+					percorsoOttimale.get(i).getPosizione().getCoordinateStampate()));
 
 			pieChartData.add(
 					new Data(percorsoOttimale.get(i).getPosizione().getNomeLuogo(), percorsoOttimale.get(i).getPeso()));
+			
+			}else {
+				values.add(new newRow(percorsoOttimale.get(i).getStringPosizione(), percorsoOttimale.get(i).getPeso(),
+						arrivo,percorsoOttimale.get(i).getPosizione().getCoordinateStampate()));
+				pieChartData.add(
+						new Data(percorsoOttimale.get(i).getPosizione().getNomeLuogo(), percorsoOttimale.get(i).getPeso()));
+			}
 
 		}
-		values.get(0).setManovra("departure");
-		values.get(percorsoOttimale.size() - 1).setManovra("arrive");
+		values.get(0).setManovra(partenza);
+		
 		tableView.setItems(values);
 	}
 
@@ -274,14 +284,8 @@ public class Controller {
 		pieChartData = FXCollections.observableArrayList(new PieChart.Data("strada", 100));
 		pieChart.setData(pieChartData);
 		
-		//dim minima.
-		slider.setMin(0);
-		//dimensione massima step da caricare nel sistema.
-		slider.setMax(NUMMAXSTEP);
-		slider.setMajorTickUnit(NUMMAXSTEP/6);
-		slider.setMinorTickCount(3);
-		
 
+	
 	}
 
 	public void setModel(Model model) {
@@ -289,6 +293,7 @@ public class Controller {
 		model.creaGrafo();
 		this.verticiGrafo.textProperty().bind(model.getNumVertici());
 		this.archiGrafo.textProperty().bind(model.getNumArchi());
+		this.slider.setValue(model.getNumeroStep());
 
 		boxPartenza.getItems().addAll(model.getPositionsList());
 		// boxDestinazione.getItems().addAll(model.getPositionsList());

@@ -13,7 +13,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		// TODO Auto-generated method stub
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("tesi.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("base_Interface.fxml"));
 			BorderPane root = (BorderPane) loader.load();
 			Scene scene = new Scene(root);
 			Controller controller = (Controller) loader.getController();

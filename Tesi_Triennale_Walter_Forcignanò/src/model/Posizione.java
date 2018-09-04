@@ -1,5 +1,8 @@
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.javadocmd.simplelatlng.LatLng;
 
 public class Posizione {
@@ -7,12 +10,17 @@ public class Posizione {
 	private LatLng coordinate;
 
 	private String nomeLuogo;
-	private String manovra;
 
-	public Posizione(LatLng coordinate, String nomeLuogo) {
+	private int precisioneCoordinate;
+	
+	private Map<Posizione, String> manovre;
+
+	public Posizione(LatLng coordinate, String nomeLuogo,int precisioneCoordinate) {
 		super();
 		this.coordinate = coordinate;
 		this.nomeLuogo = nomeLuogo;
+		this.precisioneCoordinate=precisioneCoordinate;
+		this.manovre= new HashMap<>();
 	}
 
 	public LatLng getCoordinate() {
@@ -29,14 +37,6 @@ public class Posizione {
 
 	public void setNomeLuogo(String nomeLuogo) {
 		this.nomeLuogo = nomeLuogo;
-	}
-
-	public String getManovra() {
-		return manovra;
-	}
-
-	public void setManovra(String manovra) {
-		this.manovra = manovra;
 	}
 
 	@Override
@@ -63,26 +63,33 @@ public class Posizione {
 			if (other.coordinate != null)
 				return false;
 		} else if (!coordinate.equals(other.coordinate)) {
-//			
-//			double latA =coordinate.getLatitude();
-//			double longA = coordinate.getLongitude();
-//			
-//			double latB = other.coordinate.getLatitude();
-//			double longB =other.coordinate.getLongitude();
-//			
-//			double precisione = 0.0002; //corrisponde a circa 22 metri.
-//			if((latA+precisione)<latB || (latA-precisione)<latB)
-		
 			return false;
 		}
 		return true;
 	}
 
-	
 	@Override
 	public String toString() {
-		return nomeLuogo + " " + coordinate.toString();
+		double latitude =  Math.round( coordinate.getLatitude() * Math.pow( 10, precisioneCoordinate ) )/Math.pow( 10, precisioneCoordinate );
+		double longitude = Math.round( coordinate.getLongitude() * Math.pow( 10, precisioneCoordinate ) )/Math.pow( 10,precisioneCoordinate );
+		
+		return nomeLuogo + " (" + latitude+","+longitude+")";
+	}
+	
+	public String getCoordinateStampate() {
+		double latitude =  Math.round( coordinate.getLatitude() * Math.pow( 10, precisioneCoordinate ) )/Math.pow( 10, precisioneCoordinate );
+		double longitude = Math.round( coordinate.getLongitude() * Math.pow( 10, precisioneCoordinate ) )/Math.pow( 10, precisioneCoordinate );
+		return "(" + latitude+","+longitude+")";
 	}
 
-	
+	public void setManovra(Posizione posizione, String manovra) {
+		this.manovre.put(posizione, manovra);
+		
+	}
+
+	public String getManovra(Posizione posizione) {
+		
+		return this.manovre.get(posizione);
+	}
+
 }

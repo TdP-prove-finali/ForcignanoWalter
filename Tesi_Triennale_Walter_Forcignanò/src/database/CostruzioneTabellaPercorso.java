@@ -12,10 +12,25 @@ public class CostruzioneTabellaPercorso {
 		dao = new TaxiDAO();
 	}
 
+	public static void main(String[] args) {
+
+		CostruzioneTabellaPercorso file = new CostruzioneTabellaPercorso();
+
+		String nomeFile = "src\\it\\polito\\tdp\\Taxi_New_York\\db\\fastest_routes_test.csv";
+
+		try {
+			file.caricaDati(nomeFile);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	public void caricaDati(String nomeFile) throws Exception {
 
 		// LETTURA FILE PER RIGA.
-		//Creazione della tabella percorso.
+		// Creazione della tabella percorso.
 
 		try {
 			FileReader r = new FileReader(nomeFile);
@@ -25,7 +40,7 @@ public class CostruzioneTabellaPercorso {
 			String s;
 			int percorso_id = 0;
 			int contatoreRiga = 0;
-			
+
 			while ((s = br.readLine()) != null) {
 				contatoreRiga++;
 				System.out.println(contatoreRiga);
@@ -46,7 +61,6 @@ public class CostruzioneTabellaPercorso {
 
 						int number_of_steps = Integer.parseInt(array[5]);
 
-						
 						if (dao.inserisciPercorsoInDB(percorso_id, id, starting_street, end_street, total_distance,
 								total_travel_time, number_of_steps)) {
 							// System.out.println("Percorso aggiunto"); } else {

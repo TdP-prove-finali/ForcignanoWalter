@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="model.PosizionePiuPeso" project="Tesi_Triennale_Walter_Forcignanò" 
-    file="/Tesi_Triennale_Walter_Forcignanò/src/model/PosizionePiuPeso.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="933" y="635"/>    
+  <class id="1" language="java" name="main.Controller" project="Tesi_Triennale_Walter_Forcignanò" 
+    file="/Tesi_Triennale_Walter_Forcignanò/src/main/Controller.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1099" y="346"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,61 +12,61 @@
   </class>  
   <class id="2" language="java" name="model.Percorso" project="Tesi_Triennale_Walter_Forcignanò" 
     file="/Tesi_Triennale_Walter_Forcignanò/src/model/Percorso.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="598" y="1062"/>    
+    <position height="-1" width="-1" x="232" y="2124"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="model.TaxiIdMap" project="Tesi_Triennale_Walter_Forcignanò" 
-    file="/Tesi_Triennale_Walter_Forcignanò/src/model/TaxiIdMap.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="236" y="608"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="model.Model" project="Tesi_Triennale_Walter_Forcignanò" 
+  <class id="3" language="java" name="model.Model" project="Tesi_Triennale_Walter_Forcignanò" 
     file="/Tesi_Triennale_Walter_Forcignanò/src/model/Model.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="856" y="300"/>    
+    <position height="-1" width="-1" x="295" y="994"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="model.PercorsoIdMap" project="Tesi_Triennale_Walter_Forcignanò" 
+  <class id="4" language="java" name="model.PercorsoIdMap" project="Tesi_Triennale_Walter_Forcignanò" 
     file="/Tesi_Triennale_Walter_Forcignanò/src/model/PercorsoIdMap.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="460" y="608"/>    
+    <position height="-1" width="-1" x="245" y="1542"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="model.Step" project="Tesi_Triennale_Walter_Forcignanò" 
+  <class id="5" language="java" name="model.Step" project="Tesi_Triennale_Walter_Forcignanò" 
     file="/Tesi_Triennale_Walter_Forcignanò/src/model/Step.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="980" y="1121"/>    
+    <position height="-1" width="-1" x="1114" y="2126"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="model.StepIdMap" project="Tesi_Triennale_Walter_Forcignanò" 
+  <class id="6" language="java" name="model.StepIdMap" project="Tesi_Triennale_Walter_Forcignanò" 
     file="/Tesi_Triennale_Walter_Forcignanò/src/model/StepIdMap.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="682" y="732"/>    
+    <position height="-1" width="-1" x="494" y="1578"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="model.Taxi" project="Tesi_Triennale_Walter_Forcignanò" 
-    file="/Tesi_Triennale_Walter_Forcignanò/src/model/Taxi.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="275" y="967"/>    
+  <class id="7" language="java" name="database.TaxiDAO" project="Tesi_Triennale_Walter_Forcignanò" 
+    file="/Tesi_Triennale_Walter_Forcignanò/src/database/TaxiDAO.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1128" y="996"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="main.PieChartController" project="Tesi_Triennale_Walter_Forcignanò" 
+    file="/Tesi_Triennale_Walter_Forcignanò/src/main/PieChartController.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="236" y="346"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="model.Posizione" project="Tesi_Triennale_Walter_Forcignanò" 
     file="/Tesi_Triennale_Walter_Forcignanò/src/model/Posizione.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1290" y="871"/>    
+    <position height="-1" width="-1" x="912" y="1341"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -83,50 +83,49 @@
     </display>  
   </class>  
   <association id="10">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="11" name="percorsoOttimale"/>      
-      <multiplicity id="12" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="13">    
-    <bendpoint x="1529" y="636"/>    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="14" name="posizioniMap"/>      
-      <multiplicity id="15" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="16">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="17" name="map"/>      
-      <multiplicity id="18" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="19">    
-    <bendpoint x="1153" y="890"/>    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="20" name="map"/>      
-      <multiplicity id="21" minimum="0" maximum="2147483647"/>    
+      <attribute id="11" name="stepIdMap"/>      
+      <multiplicity id="12" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <association id="13">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="14" name="percorsoIdMap"/>      
+      <multiplicity id="15" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="16">    
+    <bendpoint x="366" y="1821"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="17" name="map"/>      
+      <multiplicity id="18" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="19">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="20" name="controller"/>      
+      <multiplicity id="21" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <association id="22">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="23" name="posizione"/>      
-      <multiplicity id="24" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="23" name="posizioniMap"/>      
+      <multiplicity id="24" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="25">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="26" name="stepIdMap"/>      
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="26" name="dao"/>      
       <multiplicity id="27" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="7" navigable="true"/>    
@@ -137,31 +136,23 @@
       <attribute id="29" name="listaStep"/>      
       <multiplicity id="30" minimum="0" maximum="2147483647"/>    
     </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
+    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="31">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="32" name="taxiIdMap"/>      
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="32" name="model"/>      
       <multiplicity id="33" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="34">    
-    <end type="SOURCE" refId="5" navigable="false">      
+    <end type="SOURCE" refId="4" navigable="false">      
       <attribute id="35" name="map"/>      
       <multiplicity id="36" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="37">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="38" name="percorsoIdMap"/>      
-      <multiplicity id="39" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

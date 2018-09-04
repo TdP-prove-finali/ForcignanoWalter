@@ -15,6 +15,13 @@ public class newRow {
 		this.coordinate = coordinate;
 	}
 
+	public newRow(String stringPosizione, double peso, String coordinate) {
+		this.posizionePiuPeso=stringPosizione;
+		this.peso=peso;
+		this.coordinate=coordinate;
+		
+	}
+
 	public String getPosizionePiuPeso() {
 		return posizionePiuPeso;
 	}

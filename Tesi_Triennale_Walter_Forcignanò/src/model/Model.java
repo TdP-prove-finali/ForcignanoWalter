@@ -28,7 +28,7 @@ public class Model {
 	private TaxiDAO dao;
 	private PercorsoIdMap percorsoIdMap;
 	private StepIdMap stepIdMap;
-//	private TaxiIdMap taxiIdMap;
+	// private TaxiIdMap taxiIdMap;
 	private Graph<Posizione, DefaultWeightedEdge> grafo;
 	private boolean pesoTempo;
 	private Map<LatLng, Posizione> posizioniMap;
@@ -38,6 +38,7 @@ public class Model {
 	private StringProperty numArchi;
 
 	private int numeroStep;
+	private final int precisioneCoordinate;
 
 	public Model() {
 		super();
@@ -46,10 +47,11 @@ public class Model {
 		percorsoIdMap = new PercorsoIdMap();
 		stepIdMap = new StepIdMap();
 
-//		taxiIdMap = new TaxiIdMap();
+		// taxiIdMap = new TaxiIdMap();
 		percorsoOttimale = new ArrayList<>();
-		int numeroStep = 10000;
-		numVertici=new ReadOnlyStringWrapper();
+		numeroStep = 200000;
+		precisioneCoordinate=4;
+		numVertici = new ReadOnlyStringWrapper();
 		numArchi = new ReadOnlyStringWrapper();
 		// int taxiDimension = dao.loadTaxi(taxiIdMap).size();
 		int percorsiDimension = dao.loadAllPercorsi(percorsoIdMap).size();
@@ -73,6 +75,15 @@ public class Model {
 		}
 
 	}
+	/**
+	 * Il metodo serve ad arrotondare un determinato numero ad una certa cifra dopo la virgola.
+	 * @param numero
+	 * @param nCifreDecimali
+	 * @return
+	 */
+	public double arrotonda( double numero, int nCifreDecimali ){
+	    return Math.round( numero * Math.pow( 10, nCifreDecimali ) )/Math.pow( 10, nCifreDecimali );
+	}
 
 	/**
 	 * Metodo che ha lo scopo di creare il grafo, caricando tutti i vertici dati da
@@ -86,16 +97,17 @@ public class Model {
 		// come peso sarà la distanza.
 
 		posizioniMap = new HashMap<>();
+		grafo = new SimpleDirectedWeightedGraph<Posizione, DefaultWeightedEdge>(DefaultWeightedEdge.class);
 
 		for (Step s : this.stepIdMap.values()) {
-			
-//			stepIdMap.remove(s);
-			
+
+			// stepIdMap.remove(s);
+
 			String[] posizione = s.getStep_location_list().split(",");
 
 			try {
-				double latitude = Double.parseDouble(posizione[0]);
-				double longitude = Double.parseDouble(posizione[1]);
+				double latitude = arrotonda(Double.parseDouble(posizione[0]),precisioneCoordinate);
+				double longitude = arrotonda(Double.parseDouble(posizione[1]),precisioneCoordinate);
 
 				LatLng ll = new LatLng(latitude, longitude);
 				String nomeLuogo = s.getStreet_for_each_step();
@@ -103,7 +115,7 @@ public class Model {
 
 				// System.out.println(ll.toString());
 				if (!posizioniMap.containsKey(ll)) {
-					posizioniMap.put(ll, new Posizione(ll, nomeLuogo));
+					posizioniMap.put(ll, new Posizione(ll, nomeLuogo,precisioneCoordinate));
 				}
 
 			} catch (NumberFormatException nfe) {
@@ -114,11 +126,9 @@ public class Model {
 		// System.out.println("Numero di posizioni trovate: "+listaPosizioni.size()+"\n
 		// posizioni trovate: "+ listaPosizioni.toString());
 
-		grafo = new SimpleDirectedWeightedGraph<Posizione, DefaultWeightedEdge>(DefaultWeightedEdge.class);
-
 		Graphs.addAllVertices(grafo, posizioniMap.values());
 
-		numVertici.setValue(""+grafo.vertexSet().size());
+		numVertici.setValue("" + grafo.vertexSet().size());
 
 		System.out.println("Dimensione vertici del grafo: " + this.grafo.vertexSet().size());
 		System.out.println("Dimensione stepId del grafo: " + stepIdMap.values().size());
@@ -143,11 +153,11 @@ public class Model {
 					String[] coordinateArrivo = arrivo.getStep_location_list().split(",");
 
 					try {
-						double latitudePartenza = Double.parseDouble(coordinatePartenza[0]);
-						double longitudePartenza = Double.parseDouble(coordinatePartenza[1]);
+						double latitudePartenza = arrotonda(Double.parseDouble(coordinatePartenza[0]),precisioneCoordinate);
+						double longitudePartenza = arrotonda(Double.parseDouble(coordinatePartenza[1]),precisioneCoordinate);
 
-						double latitudeArrivo = Double.parseDouble(coordinateArrivo[0]);
-						double longitudeArrivo = Double.parseDouble(coordinateArrivo[1]);
+						double latitudeArrivo = arrotonda(Double.parseDouble(coordinateArrivo[0]),precisioneCoordinate);
+						double longitudeArrivo = arrotonda(Double.parseDouble(coordinateArrivo[1]),precisioneCoordinate);
 
 						LatLng part = new LatLng(latitudePartenza, longitudePartenza);
 						LatLng arr = new LatLng(latitudeArrivo, longitudeArrivo);
@@ -165,18 +175,20 @@ public class Model {
 								// versione con peso solo la distanza.
 								if (!partenzaPosizione.equals(arrivoPosizione)) {
 									if (pesoTempo) {
-										// if (tempo != 0) {
-										this.posizioniMap.get(partenzaPosizione.getCoordinate()).setManovra(manovra);
-										Graphs.addEdge(grafo, this.posizioniMap.get(partenzaPosizione.getCoordinate()),
-												this.posizioniMap.get(arrivoPosizione.getCoordinate()), tempo);
 
-										// }
+										Graphs.addEdge(grafo, partenzaPosizione,
+												arrivoPosizione, tempo);
+
+										partenzaPosizione.setManovra(
+												arrivoPosizione, manovra);
+
 									} else {
-										// if (distanza != 0) {
-										this.posizioniMap.get(partenzaPosizione.getCoordinate()).setManovra(manovra);
-										Graphs.addEdge(grafo, this.posizioniMap.get(partenzaPosizione.getCoordinate()),
-												this.posizioniMap.get(arrivoPosizione.getCoordinate()), distanza);
-										// }
+
+										Graphs.addEdge(grafo, partenzaPosizione,
+												arrivoPosizione, distanza);
+
+										partenzaPosizione.setManovra(
+												arrivoPosizione, manovra);
 									}
 								}
 
@@ -198,7 +210,8 @@ public class Model {
 										// "+grafo.getEdgeWeight(grafo.getEdge(partenzaPosizione, arrivoPosizione))+" a
 										// "+distanza);
 										//
-										this.posizioniMap.get(partenzaPosizione.getCoordinate()).setManovra(manovra);
+										partenzaPosizione.setManovra(
+												arrivoPosizione, manovra);
 
 										grafo.setEdgeWeight(grafo.getEdge(partenzaPosizione, arrivoPosizione),
 												distanza);
@@ -207,9 +220,9 @@ public class Model {
 									if (grafo
 											.getEdgeWeight(grafo.getEdge(partenzaPosizione, arrivoPosizione)) > tempo) {
 										grafo.setEdgeWeight(grafo.getEdge(partenzaPosizione, arrivoPosizione), tempo);
-										// System.out.println("Peso arco aggiornato" + partenzaPosizione.toString() + "
-										// "
-										// + arrivoPosizione.toString() + " " + tempo);
+
+										partenzaPosizione.setManovra(
+												arrivoPosizione, manovra);
 
 									}
 
@@ -235,7 +248,7 @@ public class Model {
 		// System.out.println(d.toString() + "----- " + grafo.getEdgeWeight(d));
 		//
 		// }
-		numArchi.setValue(""+grafo.edgeSet().size()); 
+		numArchi.setValue("" + grafo.edgeSet().size());
 
 	}
 
@@ -385,7 +398,6 @@ public class Model {
 	public Graph<Posizione, DefaultWeightedEdge> getGrafo() {
 		return grafo;
 	}
-
 
 	public ReadOnlyStringProperty getNumVertici() {
 		return numVertici;
