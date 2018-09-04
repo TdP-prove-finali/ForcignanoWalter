@@ -53,7 +53,8 @@ public class TaxiDAO {
 	}
 
 	/**
-	 * Carica tutti i percorsi all'interno della percorsoIdMap passata come parametro.
+	 * Carica tutti i percorsi all'interno della percorsoIdMap passata come
+	 * parametro.
 	 * 
 	 * @param percorsoIdMap
 	 */
@@ -144,8 +145,7 @@ public class TaxiDAO {
 	 * @param step_location_list
 	 * @return
 	 */
-
-	public boolean inserisciStepInSistema(String taxi_id, int percorso_id, int len, List<String> street_for_each_step,
+	 	public boolean inserisciStepInSistema(String taxi_id, int percorso_id, int len, List<String> street_for_each_step,
 			List<String> distance_per_step, List<String> travel_time_per_step, List<String> step_maneuvers,
 			List<String> step_direction, List<String> step_location_list) {
 
@@ -223,7 +223,7 @@ public class TaxiDAO {
 
 			int res = st.executeUpdate();
 
-			if (res == 1) // perchè restituisce false?? non capisco.
+			if (res == 1)
 				returnValue = true;
 
 			conn.close();
