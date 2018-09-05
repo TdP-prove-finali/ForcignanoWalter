@@ -4,13 +4,19 @@ Cammini minimi dei Taxi all'interno della città di New York - Walter Forcignan�
 
 Istruzioni per l'utilizzo dell' applicazione:
 
-Scaricare il progetto all'indirizzo https://github.com/TdP-prove-finali/ForcignanoWalter
+Scaricare il progetto all'indirizzo: 
+https://github.com/TdP-prove-finali/ForcignanoWalter
 
-1)Importare sul proprio DB sul server locale il database taxi_routes.sql da scaricare viste le grosse dimensioni al seguente link:
+1A)Importare sul proprio DB sul server locale il database taxi_routes.sql da scaricare viste le grosse dimensioni al seguente link:
   https://drive.google.com/open?id=1e61Xb8NK2UwBdAPFy2Gi4vKkp680OIdw
-
+  
+1B) E' possibile anche caricare il database a partire dal file fastest_routes_test.csv presente al sito:
+ https://www.kaggle.com/oscarleo/new-york-city-taxi-with-osrm#fastest_routes_test.csv
+ Importando il file emptyTaxyRoutes.sql presente nel drive, ed utilizzando le classi creaTabellaPercorso e creaTabellaStep presenti nel package Database, inserendo il path del file csv scaricato.
+ 
 2)All'interno della classe DBConnect immettere la propria password di accesso al database.
 
 3)Aprire il progetto con Eclipse e lanciare la classe Main per avviare l'applicazione.
 
-Per scoprire ulteriori funzionalità guardare il video di presentazione dell'applicazione.
+Per scoprire ulteriori funzionalità guardare il video di presentazione dell'applicazione a link di youtube:
+
