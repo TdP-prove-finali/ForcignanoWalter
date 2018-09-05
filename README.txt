@@ -6,7 +6,8 @@ Istruzioni per l'utilizzo dell' applicazione:
 
 Scaricare il progetto all'indirizzo https://github.com/TdP-prove-finali/ForcignanoWalter
 
-1)Importare sul proprio DB sul server locale il database taxi_routes.sql.
+1)Importare sul proprio DB sul server locale il database taxi_routes.sql da scaricare viste le grosse dimensioni al seguente link:
+  https://drive.google.com/open?id=1e61Xb8NK2UwBdAPFy2Gi4vKkp680OIdw
 
 2)All'interno della classe DBConnect immettere la propria password di accesso al database.
 
