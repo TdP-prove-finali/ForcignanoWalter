@@ -12,7 +12,7 @@ https://github.com/TdP-prove-finali/ForcignanoWalter
   
 1B) Per avere un database più completo è possibile anche caricarlo a partire dal file fastest_routes_test.csv da scaricare sul sito:
  https://www.kaggle.com/oscarleo/new-york-city-taxi-with-osrm#fastest_routes_test.csv
- Importando il file emptyTaxyRoutes.sql presente nel drive, ed utilizzando le classi creaTabellaPercorso e creaTabellaStep presenti nel package Database, inserendo il path del file csv scaricato.
+ Importando il file emptyTaxyRoutes.sql presente nel drive, inserendo il path del file csv scaricato,ed utilizzando le classi creaTabellaPercorso e creaTabellaStep presenti nel package Database, è possibile caricare sul proprio DB una maggiore quantità di dati.
  
 2)All'interno della classe DBConnect immettere la propria password di accesso al database.
 
