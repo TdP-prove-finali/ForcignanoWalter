@@ -19,4 +19,5 @@ https://github.com/TdP-prove-finali/ForcignanoWalter
 3)Aprire il progetto con Eclipse e lanciare la classe Main per avviare l'applicazione.
 
 Per scoprire ulteriori funzionalità guardare il video di presentazione dell'applicazione a link di youtube:
+https://youtu.be/0sDKVsnell4
 
