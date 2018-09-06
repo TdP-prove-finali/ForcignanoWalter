@@ -440,5 +440,8 @@ public class Model {
 		System.out.println("dimensione stepidmap:  " + stepIdMap.values().size());
 
 	}
+	public double getNumeroMaxStep() {
+		return this.dao.loadNumeroStepCaricabili();
+	}
 
 }

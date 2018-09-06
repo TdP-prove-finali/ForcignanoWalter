@@ -15,6 +15,34 @@ import model.Taxi;
 import model.TaxiIdMap;
 
 public class TaxiDAO {
+	
+	/**
+	 * Metodo utile per definire il numero massimo di step caricabili all'interno del sistema.
+	 * @return
+	 */
+	public int loadNumeroStepCaricabili() {
+		String sql = "select count(*) as cnt from step";
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
+
+			 rs.next();
+
+			 int i= rs.getInt("cnt");
+
+			conn.close();
+			return i;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Errore connessione al database");
+			throw new RuntimeException("Error Connection Database");
+		}
+
+	}
+	
 	/**
 	 * Il metodo fornito carica tutti i taxi presenti nel data-set all'interno della
 	 * TaxiIdMap passata come parametro.

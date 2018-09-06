@@ -293,7 +293,10 @@ public class Controller {
 		model.creaGrafo();
 		this.verticiGrafo.textProperty().bind(model.getNumVertici());
 		this.archiGrafo.textProperty().bind(model.getNumArchi());
+		double maxStep=model.getNumeroMaxStep();
+		this.slider.setMax(maxStep);
 		this.slider.setValue(model.getNumeroStep());
+		this.slider.setMajorTickUnit(maxStep/6);
 
 		boxPartenza.getItems().addAll(model.getPositionsList());
 		// boxDestinazione.getItems().addAll(model.getPositionsList());
