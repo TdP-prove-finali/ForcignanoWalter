@@ -7,10 +7,10 @@ Istruzioni per l'utilizzo dell' applicazione:
 Scaricare il progetto all'indirizzo: 
 https://github.com/TdP-prove-finali/ForcignanoWalter
 
-1A)Importare sul proprio DB sul server locale il database taxi_routes.sql da scaricare viste le grosse dimensioni al seguente link:
+1A)Importare sul proprio server locale il database taxi_routes.sql da scaricare viste le grosse dimensioni al seguente link:
   https://drive.google.com/open?id=1e61Xb8NK2UwBdAPFy2Gi4vKkp680OIdw
   
-1B) E' possibile anche caricare il database a partire dal file fastest_routes_test.csv presente al sito:
+1B) Per avere un database più completo è possibile anche caricarlo a partire dal file fastest_routes_test.csv da scaricare sul sito:
  https://www.kaggle.com/oscarleo/new-york-city-taxi-with-osrm#fastest_routes_test.csv
  Importando il file emptyTaxyRoutes.sql presente nel drive, ed utilizzando le classi creaTabellaPercorso e creaTabellaStep presenti nel package Database, inserendo il path del file csv scaricato.
  
